@@ -3,11 +3,11 @@ import { Alert, Keyboard, Platform, TouchableWithoutFeedback } from 'react-nativ
 import * as Yup from 'yup';
 import { ValidationError } from 'yup';
 
-import {PageLoginContainer, Title, LoginButton, Logo, Input, ButtonText, Main} from './styles';
-
+import { useAuth } from '../../hooks/auth';
 
 import LogoImg from '../../assets/images/logo.png'
-import { useAuth } from '../../hooks/auth';
+
+import {PageLoginContainer, Title, LoginButton, Logo, Input, ButtonText, Main} from './styles';
 
 import {Errors} from '../../interfaces'
 

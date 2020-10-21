@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Modal } from 'react-native';
-import { DarkView, SecondView, Section, Header, Title, CancelButton, CancelButtonText} from './styles';
 
+import { DarkView, SecondView, Section, Header, Title, CancelButton, CancelButtonText} from './styles';
 
 interface FeedModalProps extends React.ComponentProps<typeof Modal> {
     Options: ReactNode;

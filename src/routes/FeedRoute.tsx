@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import Inpiu from '../pages/Inpiu';
 import TabsRoute from './TabsRoute';
 

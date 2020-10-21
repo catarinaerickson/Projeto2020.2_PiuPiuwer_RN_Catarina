@@ -1,10 +1,8 @@
 import React, { createContext, useCallback, useContext, useEffect, useState} from 'react';
-import { AsyncStorage } from 'react-native';
-
-
-import {PiuObject} from '../interfaces'
 
 import api from '../services/api';
+
+import {PiuObject} from '../interfaces'
 
 interface PiusContextData {
     pius: PiuObject[];

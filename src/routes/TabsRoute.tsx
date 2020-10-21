@@ -1,12 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import Profile from '../pages/Profile';
 import Search from '../pages/Search';
-
-
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import Feed from '../pages/Feed';
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -18,7 +16,7 @@ function TabsRoute() {
             tabBarOptions={{
                 style:{
                     elevation: 0,
-                    shadowOpacity: 0,                    
+                    shadowOpacity: 0,                 
                 },
                 tabStyle: {
                     alignItems: 'center',

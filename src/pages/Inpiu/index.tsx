@@ -1,21 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Keyboard, Platform, TouchableWithoutFeedback, Text, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import * as Yup from 'yup';
 import { ValidationError } from 'yup';
+import { Feather } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+
+import api from '../../services/api';
+
+import { useAuth } from '../../hooks/auth';
+import { usePius } from '../../hooks/pius';
+
+import PiuInput from '../../components/PiuInput';
 
 import { Container, ExitButton, Header, Main, InputView, KeyboardAcessory, ProfilePic, ProfilePicContainer, SubmitButton, SubmitButtonText, KeyboardAcessoryView, KeyboardCounterView, CounterNum, CounterIconView, CircleView } from './styles';
 
-import { Feather } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useAuth } from '../../hooks/auth';
-import PiuInput from '../../components/PiuInput';
-import api from '../../services/api';
-
 import {Errors, PiuObject} from '../../interfaces'
-import { usePius } from '../../hooks/pius';
 
 const Inpiu: React.FC = () => {
   const { user } = useAuth();

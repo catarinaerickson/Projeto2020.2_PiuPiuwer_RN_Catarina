@@ -1,22 +1,24 @@
 import React, { useCallback, useState } from 'react';
-import { Button, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { useNavigation} from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
-import { PageFeedContainer, Header, Logo, FeatherButton, LogOutButton, UserBlock, ModalImgContainer, ModalProfileImg, UserInfo, Name, Username, CheckIcon, LogoutBlock, ModalLogoutButton, ModalButtonText } from './styles';
-
-import Piu from '../../components/Piu';
-import FeedModal from '../../components/Modal';
+import api from '../../services/api';
 
 import { useAuth } from '../../hooks/auth';
 import { usePius } from '../../hooks/pius';
 
 import LogoImg from '../../assets/images/logo.png';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+
+import Piu from '../../components/Piu';
+import FeedModal from '../../components/Modal';
+
+import { PageFeedContainer, Header, Logo, FeatherButton, LogOutButton, UserBlock, ModalImgContainer, ModalProfileImg, UserInfo, Name, Username, CheckIcon, LogoutBlock, ModalLogoutButton, ModalButtonText } from './styles';
 
 import {PiuObject} from '../../interfaces'
-import api from '../../services/api';
+
 
 interface ModalLogoutProps {
     logout(): void;
@@ -38,9 +40,6 @@ const Feed: React.FC = () => {
         const response = await api.get('/pius/');
         SetPius(response.data);
         setRefreshing(false);
-        // setTimeout(() => {
-        //     setRefreshing(false)
-        // }, 4000)
       }, [api, SetPius, setRefreshing]);
 
     const handleNaviteToInpiu = useCallback(() => {

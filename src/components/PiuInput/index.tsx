@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
 
-
 import { Input } from './styles';
 
 interface PiuInputProps extends React.ComponentProps<typeof TextInput> {

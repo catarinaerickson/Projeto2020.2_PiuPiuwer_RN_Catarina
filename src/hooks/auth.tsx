@@ -1,9 +1,10 @@
 import React, { createContext, useCallback, useContext, useEffect, useState} from 'react';
-import { AsyncStorage } from 'react-native';
-
-import {User} from '../interfaces'
+import  AsyncStorage  from '@react-native-community/async-storage';
 
 import api from '../services/api';
+
+import {User} from '../interfaces';
+
 
 
 interface AuthContextData {
@@ -30,14 +31,16 @@ export const AuthProvider: React.FC = ({ children }) => {
     
     useEffect(() => {
         async function getUserData() {
-            const [user, token] = await AsyncStorage.multiGet(['@Project:user', '@Project:token'])
-            
+            // const [user, token] = await AsyncStorage.multiGet(['@Project:user', '@Project:token'])
+            const user = await AsyncStorage.getItem('@Project:user');
+            const token = await AsyncStorage.getItem('@Project:token');
             if (user && token) {
                 api.defaults.headers.Authorization = `JWT ${token}`;
-                setUserData({user: JSON.parse(user[1]), token: token[1]})
+                setUserData({user: JSON.parse(user), token: token})
+            } else {
+                setUserData({} as AuthState)
             }
     
-            setUserData({} as AuthState)
         }
 
         getUserData();
@@ -71,9 +74,9 @@ export const AuthProvider: React.FC = ({ children }) => {
         
     },[])
 
-    const logout = useCallback(() => {
-        AsyncStorage.removeItem('@Project:user');
-        AsyncStorage.removeItem('@Project:token');
+    const logout = useCallback(async () => {
+        await AsyncStorage.removeItem('@Project:user');
+        await AsyncStorage.removeItem('@Project:token');
     
         setUserData({} as AuthState);
     }, [])

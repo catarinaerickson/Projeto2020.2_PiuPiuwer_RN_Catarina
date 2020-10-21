@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-
-import { PiuBlock, PiuContainer, Name, PiuUser, ProfileImg, ProfilePicContainer, Username, PiuMsg, PiuMsgContainer, IconBar, IconContainer, IconNum, DownButton, DeleteButton, DeleteButtonText, DeleteView } from './styles';
-import FeedModal from '../Modal';
-
-import { useAuth } from '../../hooks/auth';
+import { FontAwesome, Feather } from '@expo/vector-icons';
 
 import api from '../../services/api';
 
-import { FontAwesome, Feather } from '@expo/vector-icons';
+import { useAuth } from '../../hooks/auth';
+
+import FeedModal from '../Modal';
+
+import { PiuBlock, PiuContainer, Name, PiuUser, ProfileImg, ProfilePicContainer, Username, PiuMsg, PiuMsgContainer, IconBar, IconContainer, IconNum, DownButton, DeleteButton, DeleteButtonText, DeleteView } from './styles';
 
 import { PiuObject, User } from '../../interfaces';
 
