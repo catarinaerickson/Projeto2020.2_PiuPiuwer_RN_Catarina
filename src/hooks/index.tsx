@@ -1,11 +1,14 @@
 import React from 'react';
 
 import { AuthProvider } from './auth';
+import { PiusProvider } from './pius';
 
 const AppProvider: React.FC = ({ children}) => {
     return (
         <AuthProvider>
-            { children }
+            <PiusProvider>
+                { children }
+            </PiusProvider>
         </AuthProvider>
     )
 }

@@ -1,4 +1,4 @@
-import { InputAccessoryView, KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
@@ -57,18 +57,14 @@ export const ProfilePicContainer = styled.View `
 export const ProfilePic = styled.Image `
     flex: 1;
     justify-content: center;
+    border-radius: 20px;
     width: 100%;
 `
 
-export const Input = styled.TextInput `
-    flex: 1;
-    padding: 15px 0;
-    font-family: 'Archivo_400Regular';
-    font-size: 19px;
-`
 export const KeyboardAcessory = styled.View `
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
     padding: 0 5px;
     border-top-color: #e6e6f0;
@@ -79,4 +75,29 @@ export const KeyboardAcessoryView = styled.View `
     width:50%;
     justify-content: space-between;
     align-items: center;
+`
+
+export const KeyboardCounterView = styled.View `
+    flex-direction:row;
+    width:50%;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 3px 0;
+`
+export const CircleView = styled.View `
+    padding: 5px;
+`
+
+export const CounterNum =styled.Text `
+    font-family: 'Poppins_400Regular';
+    font-size: 13px;
+    color: rgba(229,23,17,0.7);
+`
+
+export const CounterIconView = styled.View `
+    border-left-color: #e6e6f0;
+    border-left-width: 1px;
+    padding-left: 5px;
+    align-items: center;
+    justify-content: center;
 `

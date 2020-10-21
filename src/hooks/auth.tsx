@@ -1,34 +1,19 @@
 import React, { createContext, useCallback, useContext, useEffect, useState} from 'react';
 import { AsyncStorage } from 'react-native';
 
+import {User} from '../interfaces'
+
 import api from '../services/api';
 
-export interface reducedUser {
-    id: number;
-    username: string;
-}
-
-export interface user {
-    username: string;
-    first_name: string;
-    last_name: string;
-    foto: string;
-    seguidores?: reducedUser[];
-    id: number;
-    pius: [];
-    favoritos: [];
-    seguindo?: reducedUser[];
-    email: string;
-}
 
 interface AuthContextData {
-    user: user;
+    user: User;
     login({username, password}: LoginCredentials): Promise<string | undefined>;
     logout(): void;
 }
 
 interface AuthState{
-    user: user;
+    user: User;
     token: string;
 }
 
@@ -48,7 +33,7 @@ export const AuthProvider: React.FC = ({ children }) => {
             const [user, token] = await AsyncStorage.multiGet(['@Project:user', '@Project:token'])
             
             if (user && token) {
-                api.defaults.headers.authorization = `JWT ${token}`;
+                api.defaults.headers.Authorization = `JWT ${token}`;
                 setUserData({user: JSON.parse(user[1]), token: token[1]})
             }
     
@@ -64,14 +49,12 @@ export const AuthProvider: React.FC = ({ children }) => {
             const {token} = response.data;
             await AsyncStorage.setItem('@Project:token', token);
             
-            if (token) { 
-                console.log(username)
-                console.log(token)
+            if (!!token) {
+                api.defaults.headers.Authorization = `JWT ${token}`;  
                 const userResponse = await api.get('usuarios/?search=' + username);
                 const user = userResponse.data[0];
                 await AsyncStorage.setItem('@Project:user', JSON.stringify(user));
                 setUserData({ user, token});          
-                api.defaults.headers.authorization = `JWT ${token}`;  
             } 
         } catch (err) {
             if (err.response) {
@@ -79,10 +62,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     
                 if (data.global != null && data.global[0] === 'Impossível fazer login com as credenciais fornecidas.') {
                     return 'Usuário e senha incorretos.'
-                } else if (data.username != null && data.username[0] === 'Este campo não pode ser em branco.' ||
-                 data.password != null && data.password[0] === 'Este campo não pode ser em branco.') {
-                    return 'Por favor, preencha todos os campos.'
-                };
+                } 
             } else if (err.request) {
                 return 'Desculpe, não conseguimos realizar o login.'
             }

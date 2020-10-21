@@ -1,32 +1,61 @@
 import React, { useCallback, useState } from 'react';
-import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
+import { Alert, Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
+import * as Yup from 'yup';
+import { ValidationError } from 'yup';
 
 import {PageLoginContainer, Title, LoginButton, Logo, Input, ButtonText, Main} from './styles';
+
 
 import LogoImg from '../../assets/images/logo.png'
 import { useAuth } from '../../hooks/auth';
 
+import {Errors} from '../../interfaces'
+
 const Login: React.FC = () => {
-    
     const [user, setUser] = useState({
         username:'',
         password:''
-    });
-
-    const [errMessage, setErrMessage] = useState({message: ''});
-
-    const { login } = useAuth();
+    });    
     
-    const handleLogin = useCallback (async () => {
-        const err = await login(user); 
+    const { login } = useAuth();
 
-        if (err != null) {
-            setErrMessage({message: err});
-        }        
-        
-        setUser({username: '', password: ''});
+    const getValidationErrors =useCallback((error: ValidationError): Errors => {
+        const validationErrors: Errors = {};
 
-    }, [user, login, setErrMessage]);
+        error.inner.forEach(error => {
+            validationErrors[error.path] = error.message;
+        });
+
+        return validationErrors;
+    }, [])
+    
+    const handleLogin = useCallback(async() => {
+        try {
+            const esquema = Yup.object().shape({
+                username: Yup.string().required('Por favor, digite seu usuário'),
+                password: Yup.string().required('Por favor, digite sua senha'),
+            });
+
+            await esquema.validate(user, { abortEarly: false });
+            const apiErr = await login(user);
+            if(apiErr) {
+                Alert.alert('Não foi possível fazer login', apiErr); 
+            }
+        } catch(err) {
+            if (err instanceof Yup.ValidationError) {
+                const errors = getValidationErrors(err);
+                if(errors.username && errors.password) {                     
+                    Alert.alert('Não foi possível fazer login', 'Por favor, preencha todos os campos');                                                  
+                } else {
+                    if(errors.username) {
+                        Alert.alert('Não foi possível fazer login', errors.username);                                                  
+                    } else {                     
+                        Alert.alert('Não foi possível fazer login', errors.password); 
+                    }
+                }
+            }
+        }
+    }, [user, login])
 
     return (
        <PageLoginContainer
